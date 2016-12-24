@@ -1,0 +1,12 @@
+version: '2'
+services:
+  github-trending-api:
+    build: .
+    command: bundle exec puma -C config/puma.rb
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - "8888:8080"
+    command: nginx -g 'daemon off;'
+    depends_on:
+      - github-trending-api
