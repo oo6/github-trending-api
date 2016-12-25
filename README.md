@@ -3,8 +3,8 @@
 ### For Local Development
 
 1. bundle install
-2. ruby app.rb
-3. open browser: http://localost:4567
+2. shotgun app.rb
+3. open browser: http://localost:9393
 
 ### Getting Started With Heroku
 

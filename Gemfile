@@ -4,3 +4,5 @@ gem 'sinatra'
 gem 'nokogiri'
 gem 'puma'
 gem 'redis'
+
+gem 'shotgun'
