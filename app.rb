@@ -11,7 +11,7 @@ end
 
 get '/trending' do
   content_type 'application/json'
-  uri = URI.parse("#{GITHUB_HOST}/trending")
+  uri = URI.parse("#{GITHUB_HOST}/trending?since=#{params[:since]}")
   github_trending_html = get_response_body(uri)
   repos = []
 
@@ -25,7 +25,7 @@ end
 get '/trending/:language' do
   content_type 'application/json'
   language = params[:language]
-  uri = URI.parse("#{GITHUB_HOST}/trending/#{language}")
+  uri = URI.parse("#{GITHUB_HOST}/trending/#{language}?since=#{params[:since]}")
   github_trending_html = get_response_body(uri)
   repos = []
 
