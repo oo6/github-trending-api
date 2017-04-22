@@ -19,12 +19,7 @@ get '/trending' do
 
   since = normalize_params_since(params[:since])
   uri = URI.parse("#{GITHUB_HOST}/trending?since=#{since}")
-  github_trending_html = get_response_body(uri)
-  repos = []
-
-  github_trending_html.css('ol.repo-list li').each do |repo_html|
-    repos.push(generate_repo(repo_html))
-  end
+  repos = generate_repos(get_response_body(uri))
 
   JSON.pretty_generate(repos)
 end
@@ -34,19 +29,32 @@ get '/trending/:language' do
 
   since = normalize_params_since(params[:since])
   uri = URI.parse("#{GITHUB_HOST}/trending/#{params[:language]}?since=#{since}")
-  github_trending_html = get_response_body(uri)
-  repos = []
-
-  github_trending_html.css('ol.repo-list li').each do |repo_html|
-    repos.push(generate_repo(repo_html))
-  end
+  repos = generate_repos(get_response_body(uri))
 
   JSON.pretty_generate(repos)
 end
 
+not_found do
+  JSON.pretty_generate({
+    "message": "Trending repositories results are currently being dissected.",
+    "documentation_url": "https://github.com/lixu19941116/github-trending-api",
+  })
+end
+
+private
 def get_response_body(uri)
   response = Net::HTTP.get_response(uri)
   Nokogiri::HTML(response.body)
+end
+
+def generate_repos(github_trending_html)
+  repos = []
+  github_trending_html.css('ol.repo-list li').each do |repo_html|
+    repos.push(generate_repo(repo_html))
+  end
+
+  raise Sinatra::NotFound if repos.empty?
+  repos
 end
 
 def generate_repo(repo_html)
