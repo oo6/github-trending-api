@@ -4,6 +4,11 @@ require "json"
 
 GITHUB_HOST = "https://github.com"
 GITHUB_API_HOST = "https://api.github.com"
+SINCE_HASH = {
+  "daily" => "daily",
+  "weekly" => "weekly",
+  "monthly" => "monthly",
+}
 
 get '/' do
   'hello world'
@@ -11,7 +16,9 @@ end
 
 get '/trending' do
   content_type 'application/json'
-  uri = URI.parse("#{GITHUB_HOST}/trending?since=#{params[:since]}")
+
+  since = normalize_params_since(params[:since])
+  uri = URI.parse("#{GITHUB_HOST}/trending?since=#{since}")
   github_trending_html = get_response_body(uri)
   repos = []
 
@@ -24,8 +31,9 @@ end
 
 get '/trending/:language' do
   content_type 'application/json'
-  language = params[:language]
-  uri = URI.parse("#{GITHUB_HOST}/trending/#{language}?since=#{params[:since]}")
+
+  since = normalize_params_since(params[:since])
+  uri = URI.parse("#{GITHUB_HOST}/trending/#{params[:language]}?since=#{since}")
   github_trending_html = get_response_body(uri)
   repos = []
 
@@ -63,4 +71,8 @@ def generate_repo(repo_html)
       html_url: "#{GITHUB_HOST}/#{login}"
     }
   }
+end
+
+def normalize_params_since(since)
+  SINCE_HASH[since] ? SINCE_HASH[since] : "daily"
 end
