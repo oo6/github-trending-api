@@ -4,7 +4,7 @@
 
 1. bundle install
 2. shotgun app.rb
-3. open browser: http://localost:9393
+3. open browser: http://localhost:9393
 
 ### Getting Started With Heroku
 
@@ -15,4 +15,4 @@
 ### Getting Started With Docker
 
 1. docker-compose up
-2. open browser: http://localost:8888
+2. open browser: http://localhost:8888
