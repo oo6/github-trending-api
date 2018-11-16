@@ -72,8 +72,8 @@ def generate_repo(repo_html)
     url: "#{GITHUB_API_HOST}/repos/#{full_name}",
     html_url: "#{GITHUB_HOST}/#{full_name}",
     language: repo_html.css('div.f6 span.mr-3').text.strip,
-    stargazers_count: stargazers_forks_count[0].text.strip,
-    forks_count: stargazers_forks_count[1].text.strip,
+    stargazers_count: normalize_count(stargazers_forks_count[0].text.strip),
+    forks_count: normalize_count(stargazers_forks_count[1].text.strip),
     owner: {
       login: full_name.split('/')[0],
       url: "#{GITHUB_API_HOST}/users/#{login}",
@@ -84,4 +84,8 @@ end
 
 def normalize_params_since(since)
   SINCE_HASH[since] ? SINCE_HASH[since] : "daily"
+end
+
+def normalize_count(count)
+  count.gsub(',', '').to_i
 end
