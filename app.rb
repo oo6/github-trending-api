@@ -1,6 +1,7 @@
 require "sinatra"
 require "nokogiri"
 require "json"
+require "net/http"
 
 GITHUB_HOST = "https://github.com"
 GITHUB_API_HOST = "https://api.github.com"
