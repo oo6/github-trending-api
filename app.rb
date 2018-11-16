@@ -71,7 +71,7 @@ def generate_repo(repo_html)
     description: repo_html.css('div.py-1 p').text.strip,
     url: "#{GITHUB_API_HOST}/repos/#{full_name}",
     html_url: "#{GITHUB_HOST}/#{full_name}",
-    language: repo_html.css('div.f6 span.mr-3').text.strip,
+    language: repo_html.css('div.f6 span.mr-3')[0].text.strip,
     stargazers_count: normalize_count(stargazers_forks_count[0].text.strip),
     forks_count: normalize_count(stargazers_forks_count[1].text.strip),
     owner: {
