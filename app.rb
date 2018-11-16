@@ -38,7 +38,7 @@ end
 not_found do
   JSON.pretty_generate({
     "message": "Trending repositories results are currently being dissected.",
-    "documentation_url": "#{GITHUB_HOST}/lixu19941116/github-trending-api",
+    "documentation_url": "#{GITHUB_HOST}/oo6/github-trending-api",
   })
 end
 
